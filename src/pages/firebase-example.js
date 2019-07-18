@@ -8,7 +8,7 @@ const { getInstance } = require('../firebase/firebase');
 
 const firebase = getInstance();
 // Import the template to use
-const aboutTemplate = require('../templates/list.handlebars');
+const Template = require('../templates/list.handlebars');
 
 export default () => {
   // Data to be passed to the template
@@ -16,7 +16,7 @@ export default () => {
   let posts = {};
   const title = 'Firebase calls example';
   // Return the compiled template to the router
-  update(compile(aboutTemplate)({ title, loading, posts }));
+  update(compile(Template)({ title, loading, posts }));
 
   if (firebase) {
     // firebase.auth().createUserWithEmailAndPassword('test@test.com', 'test333').catch((error) => {
@@ -31,7 +31,7 @@ export default () => {
       posts = snapshot.val();
       loading = false;
       // Run the update helper to update the template
-      update(compile(aboutTemplate)({ title, loading, posts }));
+      update(compile(Template)({ title, loading, posts }));
     });
   }
 };

@@ -7,10 +7,12 @@ import routes from './routes';
 // Partials
 const header = require('./partials/header.handlebars');
 const footer = require('./partials/footer.handlebars');
+const navigation = require('./partials/navigation.handlebars');
 
 // Register the partial components
 handlebars.registerPartial('header', compile(header)({ title: 'Just another web app' }));
 handlebars.registerPartial('footer', compile(footer)({ text: 'Template made with love by GDM Ghent' }));
+handlebars.registerPartial('navigation', compile(navigation));
 
 // Router logic to load the correct template when needed
 const router = new Navigo(window.location.origin, true);
@@ -28,5 +30,11 @@ router.notFound(() => {
 });
 router.resolve();
 window.onload = () => {
-  router.navigate(window.location.hash.split('/')[1]);
+  document.onclick = (e) => {
+    // e.preventDefault();
+    const target = e.target.getAttribute('href');
+    if (target != null) {
+      router.navigate(target);
+    }
+  };
 };
