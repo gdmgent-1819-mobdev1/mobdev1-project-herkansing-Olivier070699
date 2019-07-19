@@ -13,6 +13,7 @@ import BerichtenOverzichtView from './pages/berichtenOverzicht';
 import DetailKotView from './pages/detailKot';
 import MessageView from './pages/message';
 import LogoutView from './pages/logout';
+import FavorietenView from './pages/favorieten';
 
 export default [
   { path: '/', view: HomeView },
@@ -29,4 +30,5 @@ export default [
   { path: '/detailKot', view: DetailKotView },
   { path: '/message', view: MessageView },
   { path: '/logout', view: LogoutView },
+  { path: '/favorieten', view: FavorietenView },
 ];

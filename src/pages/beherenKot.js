@@ -112,10 +112,28 @@ export default () => {
 
           });
           read_data();
-          alert(`${gebouw} werd geüpdate`);
+
+          const notificationsEnabled = localStorage.getItem('notifications');
+          if (notificationsEnabled === 'true') {
+            const notification = new Notification('Update!', {
+              body: `${gebouw} werd geüpdate`,
+              // icon: 'link',
+            });
+            setTimeout(() => { notification.close(); }, 5000);
+          }
+
           document.getElementById('form').style.display = 'none';
         } else {
-          alert('Er zijn nog lege velden');
+          
+          const notificationsEnabled = localStorage.getItem('notifications');
+          if (notificationsEnabled === 'true') {
+            const notification = new Notification('Opgelet!', {
+              body: 'Er zijn nog lege velden',
+              // icon: 'link',
+            });
+            setTimeout(() => { notification.close(); }, 5000);
+          }
+
           read_data();
         }
       });
@@ -136,7 +154,6 @@ export default () => {
       if (firebase) {
         const fileUpload = document.getElementById('image');
         let imagePath;
-        let imgURL;
         fileUpload.addEventListener('change', (evt) => {
           if (fileUpload.value !== '') {
             const fileName = evt.target.files[0].name.replace(/\s+/g, '-').toLowerCase();
@@ -147,7 +164,10 @@ export default () => {
 
               const storeImage = firebase.storage().ref(imagePath);
               storeImage.getDownloadURL().then((url) => {
-                imgURL = url;
+                console.log(url);
+                firebase.database().ref(`images/${key}`).push({
+                  image: url,
+                });
               });
             });
           }
@@ -155,7 +175,6 @@ export default () => {
       }
     }
     read_data();
-    console.log(URL);
   } else {
     window.location.href = '#/login';
   }

@@ -22,8 +22,7 @@ export default () => {
   if (localStorage.getItem('userEmail') != null) {
     // LOGOUT
     function logout(e) {
-        localStorage.removeItem('userEmail');
-        localStorage.removeItem('updateKey');
+      window.localStorage.clear();
       firebase.auth().signOut();
       window.location.href = '/';
       }

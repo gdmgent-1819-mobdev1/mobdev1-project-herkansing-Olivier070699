@@ -49,35 +49,41 @@ export default () => {
       const txtPassword = document.getElementById('wachtwoord').value;
       const txtPasswordHerhaal = document.getElementById('wachtwoordHerhaal').value;
       const txtUserType = localStorage.getItem('userType');
+      const campus = document.getElementById('campus').value;
       const auth = firebase.auth();
 
-      // SIGN IN
-      const promise = auth.createUserWithEmailAndPassword(txtEmail, txtPassword);
-      promise
-        .then((response) => {
-          localStorage.setItem('userEmail', txtEmail);
-          window.location.replace('#/kotenOverzicht');
-        })
-        .catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
+      if (txtPassword == txtPasswordHerhaal) {
+        // SIGN IN
+        const promise = auth.createUserWithEmailAndPassword(txtEmail, txtPassword);
+        promise
+          .then((response) => {
+            localStorage.setItem('userEmail', txtEmail);
+            window.location.replace('#/kotenOverzicht');
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
 
-          console.log(errorCode, errorMessage);
-          document.getElementById('foutMelding').innerHTML = `${errorCode} - ${errorMessage}`;
+            console.log(errorCode, errorMessage);
+            document.getElementById('foutMelding').innerHTML = `${errorCode} - ${errorMessage}`;
+          });
+
+        firebase.database().ref('gebruikers').push({
+          Voornaam: txtVoornaam,
+          Achternaam: txtAchternaam,
+          Straatnaam: txtStraatnaam,
+          Huisnummer: nmrHuisnummer,
+          Postcode: nmrPostcode,
+          Stad: txtStad,
+          Email: txtEmail,
+          Telefoonnummer: nmrTelefoonnummer,
+          userType: txtUserType,
+          Campus: campus,
         });
-
-      firebase.database().ref('gebruikers').push({
-        Voornaam: txtVoornaam,
-        Achternaam: txtAchternaam,
-        Straatnaam: txtStraatnaam,
-        Huisnummer: nmrHuisnummer,
-        Postcode: nmrPostcode,
-        Stad: txtStad,
-        Email: txtEmail,
-        Telefoonnummer: nmrTelefoonnummer,
-        userType: txtUserType,
-      });
+      } else {
+        document.getElementById('foutMelding').innerHTML = "De wachtwoorden zijn niet gelijk aan elkaar";
+      }
     });
   } else {
     window.location.href = '#/kotenOverzicht';
