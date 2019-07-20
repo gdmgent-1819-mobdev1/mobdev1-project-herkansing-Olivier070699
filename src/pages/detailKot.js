@@ -55,66 +55,79 @@ export default () => {
           });
         });
       }
-    } else {
-      window.location.href = '#/kotenOverzicht';
-    }
-    // BERICHTEN
-    const sendBtn = document.getElementById('sendBtn');
-    sendBtn.addEventListener('click', () => {
-      const bericht = document.getElementById('bericht').value;
-      if (bericht != '') {
-        const from = localStorage.getItem('huurder_name');
-        const to = localStorage.getItem('verhuurder_name');
-        const onderwerp = localStorage.getItem('onderwerp');
-        console.log(`from: ${from}, to: ${to}, onderwerp: ${onderwerp}, je bericht: ${bericht}`);
 
-        firebase.database().ref('berichten').push({
-          from,
-          to,
-          onderwerp,
-          bericht,
+      // BERICHTEN
+      const userType = localStorage.getItem('userType');
+      if (userType === 'Kotbaas') {
+        document.getElementById('chatbox').style.display = 'none';
+      }
+        const sendBtn = document.getElementById('sendBtn');
+        sendBtn.addEventListener('click', () => {
+          const bericht = document.getElementById('bericht').value;
+          if (bericht != '') {
+            const from = localStorage.getItem('userEmail');
+            const to = localStorage.getItem('verhuurder_name');
+            const onderwerp = localStorage.getItem('onderwerp');
+            console.log(`from: ${from}, to: ${to}, onderwerp: ${onderwerp}, je bericht: ${bericht}`);
+
+            firebase.database().ref('berichten').push({
+              from,
+              to,
+              onderwerp,
+              bericht,
+            });
+
+            const notification = new Notification('Gelukt!', {
+              body: 'Bericht is verzonden',
+              // icon: 'link',
+            });
+            setTimeout(() => { notification.close(); }, 5000);
+            document.getElementById('bericht').value = '';
+          } else {
+            const notification = new Notification('Let op!', {
+              body: 'Voer tekst in',
+              // icon: 'link',
+            });
+            setTimeout(() => { notification.close(); }, 5000);
+          }
         });
 
-        alert('Je berichten is verzonden');
-        document.getElementById('bericht').value = '';
-      } else {
-        alert('Type een bericht');
-      }
-    });
+      // MAP
+      function map() {
+        const adres = localStorage.getItem('adres');
+        // Mapbox code
+        if (config.mapBoxToken) {
+          mapboxgl.accessToken = config.mapBoxToken;
 
-    // MAP
-    function map() {
-      const adres = localStorage.getItem('adres');
-      // Mapbox code
-      if (config.mapBoxToken) {
-        mapboxgl.accessToken = config.mapBoxToken;
+          // eslint-disable-next-line no-undef
+          const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+          mapboxClient.geocoding.forwardGeocode({
+            query: adres,
+            autocomplete: false,
+            limit: 1,
+          })
+            .send()
+            .then((response) => {
+              if (response && response.body && response.body.features && response.body.features.length) {
+                const feature = response.body.features[0];
 
-        // eslint-disable-next-line no-undef
-        const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-        mapboxClient.geocoding.forwardGeocode({
-          query: adres,
-          autocomplete: false,
-          limit: 1,
-        })
-          .send()
-          .then((response) => {
-        if (response && response.body && response.body.features && response.body.features.length) {
-          const feature = response.body.features[0];
- 
-          const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: feature.center,
-            zoom: 10,
-          });
-          new mapboxgl.Marker()
-            .setLngLat(feature.center)
-            .addTo(map);
+                const map = new mapboxgl.Map({
+                  container: 'map',
+                  style: 'mapbox://styles/mapbox/streets-v11',
+                  center: feature.center,
+                  zoom: 10,
+                });
+                new mapboxgl.Marker()
+                  .setLngLat(feature.center)
+                  .addTo(map);
+              }
+            });
+        } else {
+          console.error('Mapbox will crash the page if no access token is given.');
         }
-      });
-      } else {
-        console.error('Mapbox will crash the page if no access token is given.');
       }
+    } else {
+      window.location.href = '#/kotenOverzicht';
     }
   } else {
     window.location.href = '#/login';

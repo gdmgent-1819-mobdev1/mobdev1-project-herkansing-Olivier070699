@@ -28,10 +28,18 @@ export default () => {
         const data = childSnapshot.val();
         const inhoud = '';
         const name = localStorage.getItem('userEmail');
-
-        if (data.from == name) {
-          const post_content = `<div><h3>${data.onderwerp}</h3><button id='${childSnapshot.key}' class='readMessageBtn'>Open chat</button></div>`;
-          document.getElementById('berichten').insertAdjacentHTML('afterbegin', post_content);
+        const userType = localStorage.getItem('userType');
+        
+        if (userType === 'Kotbaas') {
+          if (data.to == name) {
+            const post_content = `<div><h3>${data.from}</h3><p>${data.onderwerp}</p><button id='${childSnapshot.key}' class='readMessageBtn'>Open chat</button></div>`;
+            document.getElementById('berichten').insertAdjacentHTML('afterbegin', post_content);
+          }
+        } else if (userType === 'Student') {
+          if (data.from == name) {
+            const post_content = `<div><h3>${data.onderwerp}</h3><button id='${childSnapshot.key}' class='readMessageBtn'>Open chat</button></div>`;
+            document.getElementById('berichten').insertAdjacentHTML('afterbegin', post_content);
+          }
         }
       });
       renderButtons();

@@ -28,15 +28,27 @@ export default () => {
           if (data.Email == localStorage.getItem('userEmail')) {
             const userKey = childSnapshot.key;
             localStorage.setItem('userKey', userKey);
+            userType();
           }
         });
-      }); 
+      });
     }
     userKey();
+
+    function userType() {
+      const userKey = localStorage.getItem('userKey');
+      const raw = firebase.database().ref(`gebruikers/${userKey}`);
+      raw.on('value', (snapshot) => {
+        const data = snapshot.val();
+        const userType = data.userType;
+        localStorage.setItem('userType', userType);
+      });
+    }
 
 
     // READ KOTEN
     function read_data() {
+      const userType = localStorage.getItem('userType');
       const raw = firebase.database().ref('koten');
       raw.on('value', (snapshot) => {
         document.getElementById('content').innerHTML = '';
@@ -46,8 +58,13 @@ export default () => {
           const ID = `image${kotKey}`;
           localStorage.setItem('kotKey', kotKey);
           const inhoud = '';
-          const post_content = `<div class='kot_overzicht'><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><figure id='${ID}'></figure><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button><button id='${childSnapshot.key}' class='fav-btn'>Favoriet</button></div>`;
-          document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
+          if (userType == 'Kotbaas') {
+            const post_content = `<div class='kot_overzicht'><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><figure id='${ID}'></figure><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button></div>`;
+            document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
+          } else {
+            const post_content = `<div class='kot_overzicht'><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><figure id='${ID}'></figure><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button><button id='${childSnapshot.key}' class='fav-btn'>Favoriet</button></div>`;
+            document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
+          }
           read_image();
         });
         renderButtons();
@@ -84,13 +101,27 @@ export default () => {
 
     // ADD TO FAVORITS
     function addToFav(event) {
-      let key = event.currentTarget.id;
-      let userKey = localStorage.getItem('userKey');
-      let name = localStorage.getItem('userEmail');
-      firebase.database().ref(`favorits/${userKey}`).push({
-        key:key,
-        name:name
-      })
+      const childSnapKey = new Array();
+      const raw = firebase.database().ref('favorits');
+      raw.on('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const data = childSnapshot.val();
+          const child = data.key;
+          if (data.name == localStorage.getItem('userEmail')) {
+            childSnapKey.push(child);
+          }
+        });
+      });
+
+      const key = event.currentTarget.id;
+      console.log(key);
+      if (childSnapKey.includes(key) == false) {
+        const name = localStorage.getItem('userEmail');
+        firebase.database().ref('favorits').push({
+          key,
+          name,
+        });
+      }
     }
 
     // DETAIL PAGE
@@ -130,70 +161,69 @@ export default () => {
     }
 
     // Filter gebouw
-    const filterGebouw = document.getElementById('filterGebouw');
-    filterGebouw.addEventListener('click', () => {
-      reset();
-
+    const filterGebouw = document.getElementById('typeGebouw');
+    filterGebouw.addEventListener('change', () => {
       const koten = document.querySelectorAll('.kot_overzicht');
       const inputGebouw = document.getElementById('typeGebouw').value;
       const gebouwen = document.querySelectorAll('.gebouw');
 
-      const inputMinPrijs = document.getElementById('minPrijs').value;
-      const huurprijzen = document.querySelectorAll('.huurprijs');
-
-      const inputMaxPrijs = document.getElementById('maxPrijs').value;
-
       let count = 0;
       gebouwen.forEach((gebouw) => {
         const typeGebouw = gebouw.innerHTML;
-        if (inputGebouw != typeGebouw) {
+        if (inputGebouw === '') {
+          koten[count].style.display = 'block';
+        } else if (inputGebouw != typeGebouw) {
           koten[count].style.display = 'none';
         }
         count += 1;
       });
     });
 
-    // Prijs Filter
-    document.getElementById('filterPrijs').addEventListener('click', () => {
-      reset();
-      const koten = document.querySelectorAll('.kot_overzicht');
+    // Filter min prijs
+    const filterMinPrijs = document.getElementById('minPrijs');
+    filterMinPrijs.addEventListener('change', () => {
       const inputMinPrijs = document.getElementById('minPrijs').value;
       const huurprijzen = document.querySelectorAll('.huurprijs');
-      const inputMaxPrijs = document.getElementById('maxPrijs').value;
-      let count = 0;
+      const koten = document.querySelectorAll('.kot_overzicht');
 
+      let count = 0;
       huurprijzen.forEach((huurprijs) => {
         const prijs = huurprijs.innerHTML;
-        if (inputMinPrijs != null && inputMaxPrijs != null) {
-          if (inputMinPrijs < prijs && inputMaxPrijs > prijs) {
-            koten[count].style.display = 'none';
-            console.log('1');
-          }
-        } else if (inputMaxPrijs != null && inputMinPrijs == null) {
-          if (inputMaxPrijs > prijs) {
-            koten[count].style.display = 'none';
-            console.log('2');
-          }
-        } else if (inputMaxPrijs == null && inputMinPrijs != null) {
-          if (inputMinPrijs < prijs) {
-            koten[count].style.display = 'none';
-            console.log('3');
-          }
+        if (inputMinPrijs > prijs) {
+          koten[count].style.display = 'none';
         }
         count += 1;
       });
     });
 
-    document.getElementById('filterOpp').addEventListener('click', () => {
-      reset();
+    // Filter maxprijs
+    const filterMaxPrijs = document.getElementById('maxPrijs');
+    filterMaxPrijs.addEventListener('change', () => {
+      const inputMaxPrijs = document.getElementById('maxPrijs').value;
+      const huurprijzen = document.querySelectorAll('.huurprijs');
       const koten = document.querySelectorAll('.kot_overzicht');
+
+      let count = 0;
+      huurprijzen.forEach((huurprijs) => {
+        const prijs = huurprijs.innerHTML;
+        if (inputMaxPrijs < prijs) {
+          koten[count].style.display = 'none';
+        }
+        count += 1;
+      });
+    });
+
+    // Filter oppervlakte
+    const filterOpp = document.getElementById('minOpp');
+    filterOpp.addEventListener('change', () => {
+      const minOpp = document.getElementById('minOpp').value;
       const oppervlaktes = document.querySelectorAll('.oppervlakte');
-      const inputMinOpp = document.getElementById('minOpp').value;
+      const koten = document.querySelectorAll('.kot_overzicht');
 
       let count = 0;
       oppervlaktes.forEach((oppervlakte) => {
         const opp = oppervlakte.innerHTML;
-        if (inputMinOpp > opp) {
+        if (minOpp > opp) {
           koten[count].style.display = 'none';
         }
         count += 1;
@@ -204,7 +234,7 @@ export default () => {
     document.getElementById('resetFilter').addEventListener('click', reset);
     function reset() {
       const koten = document.querySelectorAll('.kot_overzicht');
-      // Reset filter
+
       for (let i = 0; i < koten.length; i++) {
         koten[i].style.display = 'block';
       }

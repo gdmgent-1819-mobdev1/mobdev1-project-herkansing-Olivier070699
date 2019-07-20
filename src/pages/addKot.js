@@ -61,7 +61,7 @@ export default () => {
       let jameubelsnee = document.getElementById('jameubelsnee').value;
       let meubilair = document.getElementById('meubilair').value;
       let beschrijving = document.getElementById('beschrijving').value;
-      let eigenaar = localStorage.getItem('name');
+      let eigenaar = localStorage.getItem('userEmail');
 
       if (gebouw != "" && adres != "" && huurprijs != "" && waarborg != "" && oppervlakte != "" && verdiepingen != "" && sanitair != "" && toilet != "" && keuken != "" && jameubelsnee != "") {
         firebase.database().ref("koten").push({
@@ -81,7 +81,6 @@ export default () => {
           meubilair: meubilair,
           beschrijving: beschrijving,
           eigenaar: eigenaar,
-
         })
 
         function showNotification() {
@@ -112,7 +111,11 @@ export default () => {
         document.getElementById('meubilair').value = "";
         document.getElementById('beschrijving').value = "";
       } else {
-        // notification
+        const notification = new Notification('Let op!', {
+          body: 'Er zijn nog lege velden',
+          // icon: 'link',
+        });
+        setTimeout(() => { notification.close(); }, 5000);
       }
     }
   } else {
