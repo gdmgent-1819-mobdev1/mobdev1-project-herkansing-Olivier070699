@@ -126,6 +126,14 @@ export default () => {
           console.error('Mapbox will crash the page if no access token is given.');
         }
       }
+
+      // share op fb
+      const url = 'url';
+      document.getElementById('share').addEventListener('click', () => {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`,
+          'facebook-share-dialog',
+          'width=800,height=600');
+      });
     } else {
       window.location.href = '#/kotenOverzicht';
     }
