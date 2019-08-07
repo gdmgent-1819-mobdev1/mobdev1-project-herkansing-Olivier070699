@@ -121,6 +121,15 @@ export default () => {
   } else {
     window.location.href = '#/login';
   }
+  
+  const userType = localStorage.getItem('userType');
+  if (userType != null) {
+    if (userType === 'Kotbaas') {
+      document.getElementById('studentNav').style.display = 'none';
+      // for
+    } else if (userType === 'Student') {
+      document.getElementById('addKot').style.display = 'none';
+      document.getElementById('beheerKot').style.display = 'none';
+    }
+  }
 };
-
-// CHECK IF USER LOGIN & CHECK IF USER TYPE IS VERHUURDER

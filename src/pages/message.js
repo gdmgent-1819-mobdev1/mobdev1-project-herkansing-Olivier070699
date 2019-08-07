@@ -57,9 +57,10 @@ export default () => {
           const data = childSnapshot.val();
           const huurder = localStorage.getItem('huurder');
           const verhuurder = localStorage.getItem('verhuurder');
+          const userEmail = localStorage.getItem('userEmail');
           const inhoud = '';
           if (huurder == data.huurder && verhuurder == data.verhuurder) {
-            if (data.sendedBy == verhuurder) {
+            if (data.sendedBy == userEmail) {
               const post_content = `<p class='messageEigen'>${data.bericht}</p>`;
               document.getElementById('conversation').insertAdjacentHTML('beforeend', post_content);
             } else {
@@ -75,19 +76,31 @@ export default () => {
     const sendNewMessageBtn = document.getElementById('sendNewMessageBtn');
     sendNewMessageBtn.addEventListener('click', () => {
       const bericht = document.getElementById('newMessage').value;
-      const verhuurder = localStorage.getItem('userEmail');
+      const verhuurder = localStorage.getItem('verhuurder');
       const huurder = localStorage.getItem('huurder');
+      const userEmail = localStorage.getItem('userEmail');
       if (bericht != '') {
         firebase.database().ref('conversation').push({
           huurder,
           verhuurder,
           bericht,
-          sendedBy: verhuurder,
+          sendedBy: userEmail,
         });
       }
       document.getElementById('newMessage').value = '';
       first_message();
     });
+
+    const userType = localStorage.getItem('userType');
+    if (userType != null) {
+      if (userType === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (userType === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
+      }
+    }
   } else {
     window.location.href = '#/login';
   }

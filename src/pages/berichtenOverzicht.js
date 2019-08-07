@@ -60,6 +60,17 @@ export default () => {
     localStorage.setItem('messageKey', messageKey);
     window.location.href = '#/message';
     }
+
+    const userType = localStorage.getItem('userType');
+    if (userType != null) {
+      if (userType === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (userType === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
+      }
+    }
   } else {
     window.location.href = '#/login';
   }

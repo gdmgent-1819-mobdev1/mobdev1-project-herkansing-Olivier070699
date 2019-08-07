@@ -64,4 +64,15 @@ export default () => {
       console.error('Mapbox will crash the page if no access token is given.');
     }
   }
+
+  const userType = localStorage.getItem('userType');
+  if (userType != null) {
+    if (userType === 'Kotbaas') {
+      document.getElementById('studentNav').style.display = 'none';
+      // for
+    } else if (userType === 'Student') {
+      document.getElementById('addKot').style.display = 'none';
+      document.getElementById('beheerKot').style.display = 'none';
+    }
+  }
 };

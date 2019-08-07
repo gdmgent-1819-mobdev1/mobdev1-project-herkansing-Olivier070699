@@ -22,6 +22,12 @@ export default () => {
   update(compile(Template)({ title, loading, posts }));
 
   if (localStorage.getItem('userEmail') != null) {
+
+    const tinderLimiet = localStorage.getItem('tinderLimiet');
+    if (tinderLimiet != null) {
+      localStorage.removeItem('tinderLimiet');
+    }
+
     // LOAD PROFILES
     const tinderProfiles = new Array();
     function data() {
@@ -52,6 +58,7 @@ export default () => {
         nul++;
       } else {
         document.getElementById('kotenFout').innerHTML = 'ER ZIJN GEEN KOTEN MEER';
+        localStorage.setItem('tinderLimiet', 'full');
       }
     }
 
@@ -78,21 +85,27 @@ export default () => {
     // LIKES
     document.getElementById('likeBtn').addEventListener('click', likeButton);
     function likeButton() {
-      const typeAdres = localStorage.getItem('typeAdres');
-      like.push(typeAdres);
-      nextProfile();
-      localStorage.setItem('like', JSON.stringify(like));
-      seeLikes();
+      const tinderLimiet = localStorage.getItem('tinderLimiet');
+      if (tinderLimiet === null) {
+        const typeAdres = localStorage.getItem('typeAdres');
+        like.push(typeAdres);
+        nextProfile();
+        localStorage.setItem('like', JSON.stringify(like));
+        seeLikes();
+      }
     }
 
     // DISLIKE
     document.getElementById('dislikeBtn').addEventListener('click', dislikeButton);
     function dislikeButton() {
-      const typeAdres = localStorage.getItem('typeAdres');
-      dislike.push(typeAdres);
-      nextProfile();
-      localStorage.setItem('dislike', JSON.stringify(dislike));
-      seeDislikes();
+      const tinderLimiet = localStorage.getItem('tinderLimiet');
+      if (tinderLimiet === null) {
+        const typeAdres = localStorage.getItem('typeAdres');
+        dislike.push(typeAdres);
+        nextProfile();
+        localStorage.setItem('dislike', JSON.stringify(dislike));
+        seeDislikes();
+      }
     }
 
     function seeLikes() {
@@ -107,6 +120,17 @@ export default () => {
       document.getElementById('dislikeList').innerHTML = '';
       for (let i = 0; i < dislike.length; i++) {
         document.getElementById('dislikeList').innerHTML += `<li class='li_dislikes' id='${i}'>${dislike[i]}</li>`;
+      }
+    }
+
+    const userType = localStorage.getItem('userType');
+    if (userType != null) {
+      if (userType === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (userType === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
       }
     }
   } else {

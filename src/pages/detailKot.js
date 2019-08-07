@@ -29,7 +29,7 @@ export default () => {
         const rawData = firebase.database().ref(`koten/${key}`);
         rawData.on('value', (snapshot) => {
           const data = snapshot.val();
-          const post_content = `<div><h3>${data.gebouw} - ${data.adres}</h3><p><b>Huur: </b>€ ${data.huurprijs}/maand, <b>Waarborg: </b>€${data.waarborg}</p><ul><li><b>Oppervlakte: </b>${data.oppervlakte} m²</li><li><b>Verdiepingen: </b>${data.verdiepingen}</li><li><b>Toilet: </b>${data.toilet}</li><li><b>Sanitair: </b>${data.sanitair}</li><li><b>Keuken: </b>${data.keuken}</li><li><b>Bemeubeld: </b>${data.jameubelsnee}: ${data.meubilair}</li></ul><h3>Korte beschrijving</h3><p>${data.beschrijving}</p></div>`;
+          const post_content = `<div><h3>${data.gebouw} - ${data.adres}</h3><p><b>Huur: </b>€ ${data.huurprijs}/maand, <b>Waarborg: </b>€${data.waarborg}</p><p><b>Oppervlakte: </b>${data.oppervlakte} m² <b>Verdiepingen: </b>${data.verdiepingen}</p><p><b>Toilet: </b>${data.toilet} <b>Sanitair: </b>${data.sanitair}</p><p><b>Keuken: </b>${data.keuken} <b>Bemeubeld: </b>${data.jameubelsnee}: ${data.meubilair}</p><h3>Korte beschrijving</h3><p>${data.beschrijving}</p></div>`;
           document.getElementById('detail_blok').innerHTML = post_content;
           localStorage.setItem('adres', data.adres);
           localStorage.setItem('verhuurder_name', data.eigenaar);
@@ -128,7 +128,8 @@ export default () => {
       }
 
       // share op fb
-      const url = 'url';
+      const url = window.location.href;
+      console.log(url);
       document.getElementById('share').addEventListener('click', () => {
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`,
           'facebook-share-dialog',
@@ -136,6 +137,17 @@ export default () => {
       });
     } else {
       window.location.href = '#/kotenOverzicht';
+    }
+
+    const userType = localStorage.getItem('userType');
+    if (userType != null) {
+      if (userType === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (userType === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
+      }
     }
   } else {
     window.location.href = '#/login';

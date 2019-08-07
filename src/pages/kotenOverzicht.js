@@ -59,10 +59,10 @@ export default () => {
           localStorage.setItem('kotKey', kotKey);
           const inhoud = '';
           if (userType == 'Kotbaas') {
-            const post_content = `<div class='kot_overzicht'><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><figure id='${ID}'></figure><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button></div>`;
+            const post_content = `<div class='kot_overzicht'><figure id='${ID}'></figure><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button></div>`;
             document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
           } else {
-            const post_content = `<div class='kot_overzicht'><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><figure id='${ID}'></figure><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button><button id='${childSnapshot.key}' class='fav-btn'>Favoriet</button></div>`;
+            const post_content = `<div class='kot_overzicht'><figure id='${ID}'></figure><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button><button id='${childSnapshot.key}' class='fav-btn'>Favoriet</button></div>`;
             document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
           }
           read_image();
@@ -241,6 +241,17 @@ export default () => {
       document.getElementById('minPrijs').value = '';
       document.getElementById('maxPrijs').value = '';
       document.getElementById('minOpp').value = '';
+    }
+
+    const type = localStorage.getItem('userType');
+    if (type != null) {
+      if (type === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (type === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
+      }
     }
   } else {
     window.location.href = '#/login';

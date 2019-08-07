@@ -29,7 +29,7 @@ export default () => {
           const data = childSnapshot.val();
           const inhoud = '';
           let post_content = `<div><h3>${data.gebouw} - ${data.adres}</h3>`;
-          if (data.eigenaar == localStorage.getItem('name')) {
+          if (data.eigenaar == localStorage.getItem('userEmail')) {
             console.log(data);
             post_content += `<button id="${childSnapshot.key}" class="remove-btn">Remove</button><button id="${childSnapshot.key}" class="edit-btn">Edit post</button><button id="${childSnapshot.key}" class="image-btn">Add images</button><hr class="inter-post"></div>`;
             localStorage.setItem(childSnapshot.key, JSON.stringify(data));
@@ -71,7 +71,7 @@ export default () => {
       const raw = firebase.database().ref(`koten/${key}`);
       raw.on('value', (snapshot) => {
         const data = snapshot.val();
-        document.getElementById('form').innerHTML = `<h3>Type gebouw</h3> <select id="type_gebouw"> <option value="kot">Kot</option> <option value="studio">Studio</option> <option value="appartement">Appartement</option> <option value="loft">Loft</option> </select> <h3>Adres</h3> <input value="${data.adres}" id="straat" type="text" placeholder="straatnaam"> <h3>Huurprijs per maand</h3> <input value="${data.huurprijs}" id="huurprijs" type="number" placeholder="prijs per maand"> <h3>Waarborg</h3> <input value="${data.waarborg}" id="waarborg" type="number" placeholder="waarborg"> <h3>Oppervlakte in m²</h3> <input value="${data.oppervlakte}" id="oppervlakte" type="number" placeholder="oppervlakte"> <h3>Aantal verdiepingen</h3> <select id="verdiepingen"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5+">5+</option></select><h3>Toilet</h3> <select id="toilet"> <option value="Privé">Privé</option> <option value="Gemeenschappelijk">Gemeenschappelijk</option> <option value="Niet aanwezig">Niet aanwezig</option> </select><h3>Sanitar</h3> <select id="sanitair"> <option value="Douche">Douche</option> <option value="Bad">Bad</option> <option value="Bad & douche">Bad & douche</option> </select> <h3>Keuken</h3> <select id="keuken"> <option value="prive">Privé</option> <option value="gemeenschappelijk">Gemeenschappelijk</option> </select> <h3>Bemeubeld</h3><select id="jameubelsnee"> <option value="Ja">Ja</option> <option value="Nee">Nee</option> </select><input value="${data.meubilair}" id="meubilair" type="text" placeholder="aanwezig meubels"> <h3>Korte beschrijving</h3> <textarea value="" id="beschrijving" placeholder="Korte beschrijving"></textarea> <input id="kot_update" type="submit" value="Updaten">`;
+        document.getElementById('form').innerHTML = `<label>Type gebouw</label> <select id="type_gebouw"> <option value="kot">Kot</option> <option value="studio">Studio</option> <option value="appartement">Appartement</option> <option value="loft">Loft</option> </select> <label>Adres</label> <input value="${data.adres}" id="straat" type="text" placeholder="straatnaam"> <label>Huurprijs per maand</label> <input value="${data.huurprijs}" id="huurprijs" type="number" placeholder="prijs per maand"> <label>Waarborg</label> <input value="${data.waarborg}" id="waarborg" type="number" placeholder="waarborg"> <label>Oppervlakte in m²</label> <input value="${data.oppervlakte}" id="oppervlakte" type="number" placeholder="oppervlakte"> <label>Aantal verdiepingen</label> <select id="verdiepingen"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5+">5+</option></select><label>Toilet</label> <select id="toilet"> <option value="Privé">Privé</option> <option value="Gemeenschappelijk">Gemeenschappelijk</option> <option value="Niet aanwezig">Niet aanwezig</option> </select><label>Sanitar</label> <select id="sanitair"> <option value="Douche">Douche</option> <option value="Bad">Bad</option> <option value="Bad & douche">Bad & douche</option> </select> <label>Keuken</label> <select id="keuken"> <option value="prive">Privé</option> <option value="gemeenschappelijk">Gemeenschappelijk</option> </select> <label>Bemeubeld</label><select id="jameubelsnee"> <option value="Ja">Ja</option> <option value="Nee">Nee</option> </select><input value="${data.meubilair}" id="meubilair" type="text" placeholder="aanwezig meubels"> <label>Korte beschrijving</label> <textarea value="" id="beschrijving" placeholder="Korte beschrijving"></textarea><button id="kot_update">updaten</button>`;
         document.getElementById('beschrijving').value = data.beschrijving;
       });
 
@@ -89,7 +89,7 @@ export default () => {
         const jameubelsnee = document.getElementById('jameubelsnee').value;
         const meubilair = document.getElementById('meubilair').value;
         const beschrijving = document.getElementById('beschrijving').value;
-        const eigenaar = localStorage.getItem('name');
+        const eigenaar = localStorage.getItem('userEmail');
 
         if (adres != '' && huurprijs != '' && waarborg != '' && oppervlakte) {
           document.getElementById('beheren').innerHTML = '';
@@ -175,6 +175,17 @@ export default () => {
       }
     }
     read_data();
+
+    const userType = localStorage.getItem('userType');
+    if (userType != null) {
+      if (userType === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (userType === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
+      }
+    }
   } else {
     window.location.href = '#/login';
   }

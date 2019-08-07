@@ -89,7 +89,18 @@ function remove(event) {
     let key = event.currentTarget.id;
     console.log(key);
     firebase.database().ref('favorits/' + key).remove();
-}
+    }
+    
+    const userType = localStorage.getItem('userType');
+    if (userType != null) {
+      if (userType === 'Kotbaas') {
+        document.getElementById('studentNav').style.display = 'none';
+        // for
+      } else if (userType === 'Student') {
+        document.getElementById('addKot').style.display = 'none';
+        document.getElementById('beheerKot').style.display = 'none';
+      }
+    }
   } else {
     window.location.href = '#/login';
   }

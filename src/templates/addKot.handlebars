@@ -1,69 +1,90 @@
 {{> navigation }}
+<div class="addKot">
+    <div>
+        <label>Type gebouw</label>
+        <select id="type_gebouw">
+            <option value="kot">Kot</option>
+            <option value="studio">Studio</option>
+            <option value="appartement">Appartement</option>
+            <option value="loft">Loft</option>
+        </select>
+    </div>
 
-<div>
-    <label>Type gebouw</label>
-    <select id="type_gebouw">
-        <option value="kot">Kot</option>
-        <option value="studio">Studio</option>
-        <option value="appartement">Appartement</option>
-        <option value="loft">Loft</option>
-    </select>
+    <div>
+        <label>Adres</label>
+        <input id="straat" type="text" placeholder="straatnaam">
+        <input id="huisnummer" type="number" placeholder="nummer">
+        <input id="stad" type="text" placeholder="gemeente">
+    </div>
 
-    <label>Adres</label>
-    <input id="straat" type="text" placeholder="straatnaam">
-    <input id="huisnummer" type="number" placeholder="nummer">
-    <input id="stad" type="text" placeholder="gemeente">
+    <div>
+        <label>Huurprijs per maand</label>
+        <input id="huurprijs" type="number" placeholder="prijs per maand">
+    </div>
 
-    <label>Huurprijs per maand</label>
-    <input id="huurprijs" type="number" placeholder="prijs per maand">
+    <div>
+        <label>Waarborg</label>
+        <input id="waarborg" type="number" placeholder="waarborg">
+    </div>
 
-    <label>Waarborg</label>
-    <input id="waarborg" type="number" placeholder="waarborg">
+    <div>
+        <label>Oppervlakte in m²</label>
+        <input id="oppervlakte" type="number" placeholder="oppervlakte">
+    </div>
 
-    <label>Oppervlakte in m²</label>
-    <input id="oppervlakte" type="number" placeholder="oppervlakte">
+    <div>
+        <label>Aantal verdiepingen</label>
+        <select id="verdiepingen">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5+">5+</option>
+        </select>
+    </div>
 
-    <label>Aantal verdiepingen</label>
-    <select id="verdiepingen">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5+">5+</option>
-    </select>
+    <div>
+        <label>Toilet</label>
+        <select id="toilet">
+            <option value="Prive">Prive</option>
+            <option value="Gemeenschappelijk">Gemeenschappelijk</option>
+            <option value="Niet aanwezig">Niet aanwezig</option>
+        </select>
+    </div>
 
-    <label>Toilet</label>
-    <select id="toilet">
-        <option value="Prive">Prive</option>
-        <option value="Gemeenschappelijk">Gemeenschappelijk</option>
-        <option value="Niet aanwezig">Niet aanwezig</option>
-    </select>
+    <div>
+        <label>Sanitar</label>
+        <select id="sanitair">
+            <option value="Douche">Douche</option>
+            <option value="Bad">Bad</option>
+            <option value="Bad & douche">Bad & douche</option>
+            <option value="Niet aanwezig">Niet aanwezig</option>
+        </select>
+    </div>
 
-    <label>Sanitar</label>
-    <select id="sanitair">
-        <option value="Douche">Douche</option>
-        <option value="Bad">Bad</option>
-        <option value="Bad & douche">Bad & douche</option>
-        <option value="Niet aanwezig">Niet aanwezig</option>
-    </select>
+    <div>
+        <label>Keuken</label>
+        <select id="keuken">
+            <option value="prive">Prive</option>
+            <option value="gemeenschappelijk">Gemeenschappelijk</option>
+        </select>
+    </div>
 
-    <label>Keuken</label>
-    <select id="keuken">
-        <option value="prive">Prive</option>
-        <option value="gemeenschappelijk">Gemeenschappelijk</option>
-    </select>
+    <div>
+        <label>Bemeubeld</label>
+        <select id="jameubelsnee">
+            <option value="Ja">Ja</option>
+            <option value="Nee">Nee</option>
+        </select>
+        <input id="meubilair" type="text" placeholder="aanwezig meubels">
+    </div>
 
-    <label>Bemeubeld</label>
-    <select id="jameubelsnee">
-        <option value="Ja">Ja</option>
-        <option value="Nee">Nee</option>
-    </select>
-    <input id="meubilair" type="text" placeholder="aanwezig meubels">
+    <div>
+        <label>Korte beschrijving</label>
+        <textarea id="beschrijving" placeholder="Korte beschrijving"></textarea>
+    </div>
 
-    <label>Korte beschrijving</label>
-    <textarea id="beschrijving" placeholder="Korte beschrijving"></textarea>
-
-    <input id="kot_toevoegen" type="submit" value="Toevoegen">
-
-    <input type="submit" id="testBtn" value="test">
+    <div>
+        <button id="kot_toevoegen">Toevoegen</button>
+    </div>
 </div>

@@ -1,52 +1,75 @@
-<div>
-    <label>Voornaam</label>
-    <input id="voornaam" type="text" placeholder="John">
+<div class="loginForm">
+    <div>
+        <label>Voornaam</label>
+        <input id="voornaam" type="text" placeholder="John">
+    </div>
 
-    <label>Achternaam</label>
-    <input id="achternaam" type="text" placeholder="Doe">
+    <div>
+        <label>Achternaam</label>
+        <input id="achternaam" type="text" placeholder="Doe">
+    </div>
 
-    <label>Straatnaam</label>
-    <input id="straatnaam" type="text" placeholder="Nieuwstraat">
+    <div>
+        <label>Straatnaam</label>
+        <input id="straatnaam" type="text" placeholder="Nieuwstraat">
+    </div>
 
-    <label>Huisnummer</label>
-    <input id="huisnummer" type="number" placeholder="1">
+    <div>
+        <label>Huisnummer</label>
+        <input id="huisnummer" type="number" placeholder="1">
+    </div>
 
-    <label>Postcode</label>
-    <input id="postcode" type="number" placeholder="1000">
+    <div>
+        <label>Postcode</label>
+        <input id="postcode" type="number" placeholder="1000">
+    </div>
 
-    <label>Stad</label>
-    <input id="stad" type="text" placeholder="Brussel">
+    <div>
+        <label>Stad</label>
+        <input id="stad" type="text" placeholder="Brussel">
+    </div>
 
-    <label>Email</label>
-    <input id="email" type="email" placeholder="JohnDoe@domein.be">
+    <div>
+        <label>Email</label>
+        <input id="email" type="email" placeholder="JohnDoe@domein.be">
+    </div>
 
-    <label>Telefoonnummer</label>
-    <input id="telefoonnummer" type="number" value="+32">
+    <div>
+        <label>Telefoonnummer</label>
+        <input id="telefoonnummer" type="number" value="0032">
+    </div>
 
-    <label>Wachtwoord</label>
-    <input id="wachtwoord" type="password" placeholder="secret">
+    <div>
+        <label>Wachtwoord</label>
+        <input id="wachtwoord" type="password" placeholder="secret">
+    </div>
 
-    <label>Herhaal wachtwoord</label>
-    <input id="wachtwoordHerhaal" type="password" placeholder="secret">
+    <div>
+        <label>Herhaal wachtwoord</label>
+        <input id="wachtwoordHerhaal" type="password" placeholder="secret">
+    </div>
 
-    <input id="student" type="radio" name="type" value="Student">
-    <label for="Student">Student</label>
+    <div>
+        <input id="student" type="radio" name="type" value="Student">
+        <label for="Student">Student</label>
+        <input id="kotbaas" type="radio" name="type" value="Kotbaas">
+        <label for="Kotbaas">Kotbaas</label>
+    </div>
 
-    <input id="kotbaas" type="radio" name="type" value="Kotbaas">
-    <label for="Kotbaas">Kotbaas</label>
+    <div>
+        <select id="campus" style="display:none">
+            <option value="">Kies campus</option>
+            <option value="St. Pietersnieuwstraat 33, 9000 Gent">UGent</option>
+            <option value="Geraard de Duivelstraat 5, 9000 Gent">HoGent</option>
+            <option value="Voetweg 66, 9000 Gent">Artevelde Hogeschool</option>
+            <option value="Gebroeders de Smetstraat 1, 9000 Gent">Odisee</option>
+            <option value="Alexianenplein 1, 9000 Gent">Luca, School of Arts</option>
+        </select>
+    </div>
 
-    <select id="campus" style="display:none">
-        <option value="">Kies campus</option>
-        <option value="St. Pietersnieuwstraat 33, 9000 Gent">UGent</option>
-        <option value="Geraard de Duivelstraat 5, 9000 Gent">HoGent</option>
-        <option value="Voetweg 66, 9000 Gent">Artevelde Hogeschool</option>
-        <option value="Gebroeders de Smetstraat 1, 9000 Gent">Odisee</option>
-        <option value="Alexianenplein 1, 9000 Gent">Luca, School of Arts</option>
-    </select>
-
-    <input id="register" type="submit" value="register">
-
-    <p id="foutMelding"></p>
-
-    <a href="#/login">Ik heb al een account</a>
+    <div>
+        <button id="register">registreer</button>
+        <p id="foutMelding"></p>
+        <a href="#/login">Ik heb al een account</a>
+    </div>
 </div>
