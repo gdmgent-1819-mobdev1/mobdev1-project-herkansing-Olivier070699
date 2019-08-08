@@ -101,6 +101,27 @@ export default () => {
         document.getElementById('beheerKot').style.display = 'none';
       }
     }
+
+    const navOpen = document.querySelector('.open');
+    const navClose = document.querySelector('.close');
+    const nav = document.getElementById('nav');
+    const allNavigationEllements = document.querySelector('.navigation');
+
+    navOpen.addEventListener('click', () => {
+      navOpen.style.display = 'none';
+      navClose.style.display = 'block';
+      nav.style.display = 'block';
+      allNavigationEllements.style.height = '100vh';
+      allNavigationEllements.style.position = 'fixed';
+    });
+
+    navClose.addEventListener('click', () => {
+      navOpen.style.display = 'block';
+      navClose.style.display = 'none';
+      nav.style.display = 'none';
+      allNavigationEllements.style.height = 'auto';
+      allNavigationEllements.style.position = 'relative';
+    });
   } else {
     window.location.href = '#/login';
   }

@@ -59,10 +59,10 @@ export default () => {
           localStorage.setItem('kotKey', kotKey);
           const inhoud = '';
           if (userType == 'Kotbaas') {
-            const post_content = `<div class='kot_overzicht'><figure id='${ID}'></figure><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button></div>`;
+            const post_content = `<div class='kot_overzicht'><figure id='${ID}'></figure><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Opp: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><button id='${childSnapshot.key}' class='readmore-btn middleRedBtn'>Lees meer</button></div>`;
             document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
           } else {
-            const post_content = `<div class='kot_overzicht'><figure id='${ID}'></figure><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Oppervlakte: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><button id='${childSnapshot.key}' class='readmore-btn'>Lees meer</button><button id='${childSnapshot.key}' class='fav-btn'>Favoriet</button></div>`;
+            const post_content = `<div class='kot_overzicht'><figure id='${ID}'></figure><h3><span class="gebouw">${data.gebouw}</span> - ${data.adres}</h3><p><b>Huur: </b>€ <span class="huurprijs">${data.huurprijs}</span>/maand, <b>Waarborg: </b>€${data.waarborg}, <b>Opp: </b><span class="oppervlakte">${data.oppervlakte}</span>m²</p><button id='${childSnapshot.key}' class='readmore-btn smallRedBtn'>Lees meer</button><button id='${childSnapshot.key}' class='fav-btn smallRedBtn'>Favoriet</button></div>`;
             document.getElementById('content').insertAdjacentHTML('afterbegin', post_content);
           }
           read_image();
@@ -253,6 +253,28 @@ export default () => {
         document.getElementById('beheerKot').style.display = 'none';
       }
     }
+
+    const navOpen = document.querySelector('.open');
+    const navClose = document.querySelector('.close');
+    const nav = document.getElementById('nav');
+    const allNavigationEllements = document.querySelector('.navigation');
+
+    navOpen.addEventListener('click', () => {
+      navOpen.style.display = 'none';
+      navClose.style.display = 'block';
+      nav.style.display = 'block';
+      allNavigationEllements.style.height = '100vh';
+      allNavigationEllements.style.position = 'fixed';
+    });
+
+    navClose.addEventListener('click', () => {
+      navOpen.style.display = 'block';
+      navClose.style.display = 'none';
+      nav.style.display = 'none';
+      allNavigationEllements.style.height = 'auto';
+      allNavigationEllements.style.position = 'relative';
+    });
+
   } else {
     window.location.href = '#/login';
   }

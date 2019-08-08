@@ -31,7 +31,7 @@ export default () => {
           let post_content = `<div><h3>${data.gebouw} - ${data.adres}</h3>`;
           if (data.eigenaar == localStorage.getItem('userEmail')) {
             console.log(data);
-            post_content += `<button id="${childSnapshot.key}" class="remove-btn">Remove</button><button id="${childSnapshot.key}" class="edit-btn">Edit post</button><button id="${childSnapshot.key}" class="image-btn">Add images</button><hr class="inter-post"></div>`;
+            post_content += `<button id="${childSnapshot.key}" class="remove-btn smallRedBtn">Remove</button><button id="${childSnapshot.key}" class="edit-btn smallRedBtn">Edit post</button><button id="${childSnapshot.key}" class="image-btn smallRedBtn">Add images</button><hr class="inter-post"></div>`;
             localStorage.setItem(childSnapshot.key, JSON.stringify(data));
           } else {
             post_content = '';
@@ -186,9 +186,29 @@ export default () => {
         document.getElementById('beheerKot').style.display = 'none';
       }
     }
+
+    const navOpen = document.querySelector('.open');
+    const navClose = document.querySelector('.close');
+    const nav = document.getElementById('nav');
+    const allNavigationEllements = document.querySelector('.navigation');
+
+    navOpen.addEventListener('click', () => {
+      navOpen.style.display = 'none';
+      navClose.style.display = 'block';
+      nav.style.display = 'block';
+      allNavigationEllements.style.height = '100vh';
+      allNavigationEllements.style.position = 'fixed';
+    });
+
+    navClose.addEventListener('click', () => {
+      navOpen.style.display = 'block';
+      navClose.style.display = 'none';
+      nav.style.display = 'none';
+      allNavigationEllements.style.height = 'auto';
+      allNavigationEllements.style.position = 'relative';
+    });
+    
   } else {
     window.location.href = '#/login';
   }
 };
-
-// NOG CHECKEN ALS KOTBAAS IS

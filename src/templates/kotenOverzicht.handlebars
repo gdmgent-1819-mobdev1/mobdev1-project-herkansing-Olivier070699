@@ -1,21 +1,23 @@
 {{> navigation }}
 
-<div id="filters">
-   <select id="typeGebouw">
-        <option value="">Alles</option>
-        <option value="kot">kot</option>
-        <option value="loft">loft</option>
-        <option value="studio">studio</option>
-        <option value="appartement">appartement</option>
-    </select>
+<div class="container box">
+    <div id="filters">
+    <select id="typeGebouw">
+            <option value="">Alles</option>
+            <option value="kot">kot</option>
+            <option value="loft">loft</option>
+            <option value="studio">studio</option>
+            <option value="appartement">appartement</option>
+        </select>
 
-    <input id="minPrijs" type="number" placeholder="min prijs">
-	<input id="maxPrijs" type="number" placeholder="max prijs">
+        <input id="minPrijs" type="number" placeholder="min prijs">
+        <input id="maxPrijs" type="number" placeholder="max prijs">
 
-    <input id="minOpp" type="number" placeholder="minimum oppervlakte">
+        <input id="minOpp" type="number" placeholder="min oppervlakte">
 
-    <button id="resetFilter">Reset filters</button>
+        <button class="smallRedBtn" id="resetFilter">Reset filters</button>
+    </div>
+
+    <div id="content"></div>
+    <div id="image"></div>
 </div>
-
-<div id="content"></div>
-<div id="image"></div>

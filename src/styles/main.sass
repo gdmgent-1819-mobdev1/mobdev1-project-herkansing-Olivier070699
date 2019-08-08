@@ -1,5 +1,6 @@
 @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css"
 // Generic styling
+
 body
     font-size: 12px
     margin: 0 auto
@@ -9,27 +10,37 @@ body
         height: 100%
         position: relative
 
-.fullMap
-    height: 100vh
-    width: 100%
+.container
+    width: 50%
+    max-width: 1440px
+    margin: 0 auto
+    clear: both
+
+@media only screen and (max-width: 1000px)
+    .container
+        width: 90%
+
+
+.hide
+    display:none
 
 
 // general
 @import "./colors"
-@import "./page"
-@import "./footer"
+@import "./form"
+@import "./list"
+@import "./box"
+@import "./fonts"
+
 
 // pages
-@import "./about"
-@import "./overview"
-@import "./tinder"
-@import "./login"
-@import "./addkot"
-@import "./editKot"
-@import "./detailPage"
-@import "./favorits" //fav & berichtenoverzicht
-@import "./messages"
+@import "./messageDetailPage"
 
 
 // attributes
-@import "./form"
+@import "./buttons"
+@import "./nav"
+@import "./verticalAlign"
+
+// components
+@import "./components"

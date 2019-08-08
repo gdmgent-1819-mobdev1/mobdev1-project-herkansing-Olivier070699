@@ -58,7 +58,7 @@ function read_data(){
       raw.on("value", function(snapshot){
             const data = snapshot.val();
             console.log(data);
-            let post_content = "<div><h3>" + data.gebouw + " - " + data.adres + "</h3><button id='" + key[i] + "' class='readmore-btn'>Lees meer</button><button id='" + childSnapKey[i] + "' class='remove-btn'>Verwijder favoriet</button></div>";
+            let post_content = "<div><h3>" + data.gebouw + " - " + data.adres + "</h3><button id='" + key[i] + "' class='readmore-btn smallRedBtn'>Lees meer</button><button id='" + childSnapKey[i] + "' class='remove-btn smallRedBtn'>Verwijder favoriet</button></div>";
             document.getElementById('favorieten').innerHTML += post_content;
             renderButtons();
   });
@@ -101,6 +101,27 @@ function remove(event) {
         document.getElementById('beheerKot').style.display = 'none';
       }
     }
+
+    const navOpen = document.querySelector('.open');
+    const navClose = document.querySelector('.close');
+    const nav = document.getElementById('nav');
+    const allNavigationEllements = document.querySelector('.navigation');
+
+    navOpen.addEventListener('click', () => {
+      navOpen.style.display = 'none';
+      navClose.style.display = 'block';
+      nav.style.display = 'block';
+      allNavigationEllements.style.height = '100vh';
+      allNavigationEllements.style.position = 'fixed';
+    });
+
+    navClose.addEventListener('click', () => {
+      navOpen.style.display = 'block';
+      navClose.style.display = 'none';
+      nav.style.display = 'none';
+      allNavigationEllements.style.height = 'auto';
+      allNavigationEllements.style.position = 'relative';
+    });
   } else {
     window.location.href = '#/login';
   }

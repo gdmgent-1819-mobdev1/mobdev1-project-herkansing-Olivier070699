@@ -29,7 +29,7 @@ export default () => {
         const rawData = firebase.database().ref(`koten/${key}`);
         rawData.on('value', (snapshot) => {
           const data = snapshot.val();
-          const post_content = `<div><h3>${data.gebouw} - ${data.adres}</h3><p><b>Huur: </b>€ ${data.huurprijs}/maand, <b>Waarborg: </b>€${data.waarborg}</p><p><b>Oppervlakte: </b>${data.oppervlakte} m² <b>Verdiepingen: </b>${data.verdiepingen}</p><p><b>Toilet: </b>${data.toilet} <b>Sanitair: </b>${data.sanitair}</p><p><b>Keuken: </b>${data.keuken} <b>Bemeubeld: </b>${data.jameubelsnee}: ${data.meubilair}</p><h3>Korte beschrijving</h3><p>${data.beschrijving}</p></div>`;
+          const post_content = `<div><h2>Beschrijving</h2><h3>${data.gebouw} - ${data.adres}</h3><p><b>Huur: </b>€ ${data.huurprijs}/maand, <b>Waarborg: </b>€${data.waarborg}</p><p><b>Oppervlakte: </b>${data.oppervlakte} m² <b>Verdiepingen: </b>${data.verdiepingen}</p><p><b>Keuken: </b>${data.keuken} <b>Bemeubeld: </b>${data.jameubelsnee}: ${data.meubilair}</p><p><b>Toilet: </b>${data.toilet} <b>Sanitair: </b>${data.sanitair}</p><h3>Korte beschrijving</h3><p>${data.beschrijving}</p></div>`;
           document.getElementById('detail_blok').innerHTML = post_content;
           localStorage.setItem('adres', data.adres);
           localStorage.setItem('verhuurder_name', data.eigenaar);
@@ -149,6 +149,27 @@ export default () => {
         document.getElementById('beheerKot').style.display = 'none';
       }
     }
+
+    const navOpen = document.querySelector('.open');
+    const navClose = document.querySelector('.close');
+    const nav = document.getElementById('nav');
+    const allNavigationEllements = document.querySelector('.navigation');
+
+    navOpen.addEventListener('click', () => {
+      navOpen.style.display = 'none';
+      navClose.style.display = 'block';
+      nav.style.display = 'block';
+      allNavigationEllements.style.height = '100vh';
+      allNavigationEllements.style.position = 'fixed';
+    });
+
+    navClose.addEventListener('click', () => {
+      navOpen.style.display = 'block';
+      navClose.style.display = 'none';
+      nav.style.display = 'none';
+      allNavigationEllements.style.height = 'auto';
+      allNavigationEllements.style.position = 'relative';
+    });
   } else {
     window.location.href = '#/login';
   }

@@ -32,12 +32,12 @@ export default () => {
         
         if (userType === 'Kotbaas') {
           if (data.to == name) {
-            const post_content = `<div><h3>${data.from}</h3><p>${data.onderwerp}</p><button id='${childSnapshot.key}' class='readMessageBtn'>Open chat</button></div>`;
+            const post_content = `<div><h3>${data.from}</h3><p>${data.onderwerp}</p><button id='${childSnapshot.key}' class='readMessageBtn middleRedBtn'>Open chat</button></div>`;
             document.getElementById('berichten').insertAdjacentHTML('afterbegin', post_content);
           }
         } else if (userType === 'Student') {
           if (data.from == name) {
-            const post_content = `<div><h3>${data.onderwerp}</h3><button id='${childSnapshot.key}' class='readMessageBtn'>Open chat</button></div>`;
+            const post_content = `<div><h3>${data.onderwerp}</h3><button id='${childSnapshot.key}' class='readMessageBtn middleRedBtn'>Open chat</button></div>`;
             document.getElementById('berichten').insertAdjacentHTML('afterbegin', post_content);
           }
         }
@@ -71,6 +71,27 @@ export default () => {
         document.getElementById('beheerKot').style.display = 'none';
       }
     }
+
+    const navOpen = document.querySelector('.open');
+    const navClose = document.querySelector('.close');
+    const nav = document.getElementById('nav');
+    const allNavigationEllements = document.querySelector('.navigation');
+
+    navOpen.addEventListener('click', () => {
+      navOpen.style.display = 'none';
+      navClose.style.display = 'block';
+      nav.style.display = 'block';
+      allNavigationEllements.style.height = '100vh';
+      allNavigationEllements.style.position = 'fixed';
+    });
+
+    navClose.addEventListener('click', () => {
+      navOpen.style.display = 'block';
+      navClose.style.display = 'none';
+      nav.style.display = 'none';
+      allNavigationEllements.style.height = 'auto';
+      allNavigationEllements.style.position = 'relative';
+    });
   } else {
     window.location.href = '#/login';
   }
